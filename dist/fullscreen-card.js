@@ -1,10 +1,10 @@
 class FullscreenCard extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
-      this.content = document.createElement('ha-card');
+      this.content = document.createElement("ha-card");
       this.content.header = "Go fullscreen";
       this.content.style.padding = "1.5em";
-      this.atag = document.createElement('a');
+      this.atag = document.createElement("a");
       this.atag.innerHTML = "Go";
       this.atag.style.border = "2px solid grey";
       this.atag.style.fontSize = "2em";
@@ -28,6 +28,6 @@ class FullscreenCard extends HTMLElement {
   }
 }
 
-customElements.define('fullscreen-card', FullscreenCard);
+customElements.define("fullscreen-card", FullscreenCard);
 window.customCards.push({type: "fullscreen-card", name: "Fullscreen card",
                          description: "Card to go fullscreen."});
