@@ -18,9 +18,10 @@ class FullscreenCard extends HTMLElement {
       this.atag.onclick = function() {
         if (this.fullscreen) {
           document.exitFullscreen();
-        }   
-        else {
+          this.atag.innerHTML = "Go fullscreen";
+        } else {
           document.body.requestFullscreen();
+          this.atag.innerHTML = "Exit fullscreen";
         }   
         this.fullscreen = !this.fullscreen;
       };  
