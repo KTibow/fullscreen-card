@@ -20,7 +20,7 @@ class FullscreenCard extends HTMLElement {
           document.exitFullscreen();
           this.atag.innerHTML = "Go fullscreen";
         } else {
-          document.body.requestFullscreen();
+          document.documentElement.requestFullscreen();
           this.atag.innerHTML = "Exit fullscreen";
         }   
         this.fullscreen = !this.fullscreen;
