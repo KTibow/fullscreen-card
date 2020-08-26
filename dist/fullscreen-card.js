@@ -1,7 +1,6 @@
 class FullscreenCard extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
-      this.fullscreen = false;
       this.content = document.createElement("ha-card");
       this.content.style.padding = "15px";
       this.atag = document.createElement("a");
@@ -15,13 +14,14 @@ class FullscreenCard extends HTMLElement {
       this.atag.style.textAlign = "center";
       this.atag.style.borderRadius = "var(--ha-card-border-radius, 4px)";
       this.atag.style.cursor = "pointer";
+      this.atag.fullscreen = false;
       this.atag.onclick = function() {
         if (this.fullscreen) {
           document.exitFullscreen();
-          this.atag.innerHTML = "Go fullscreen";
+          this.innerHTML = "Go fullscreen";
         } else {
           document.documentElement.requestFullscreen();
-          this.atag.innerHTML = "Exit fullscreen";
+          this.innerHTML = "Exit fullscreen";
         }   
         this.fullscreen = !this.fullscreen;
       };  
@@ -30,6 +30,7 @@ class FullscreenCard extends HTMLElement {
     }
   }
   setConfig(config) {
+    console.log(config);
   }
   getCardSize() {
     return 2;
