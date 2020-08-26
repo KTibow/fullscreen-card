@@ -1,7 +1,7 @@
 class FullscreenCard extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
-      this.fullscreen = false
+      this.fullscreen = false;
       this.content = document.createElement("ha-card");
       this.content.style.padding = "15px";
       this.atag = document.createElement("a");
