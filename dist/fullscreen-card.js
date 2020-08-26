@@ -3,6 +3,7 @@ class FullscreenCard extends HTMLElement {
     if (!this.content) {
       this.content = document.createElement("ha-card");
       this.content.style.padding = "15px";
+      this.fullscreen = false;
       this.atag = document.createElement("a");
       this.atag.innerHTML = "Go fullscreen";
       this.atag.style.border = "2px solid var(--primary-color)";
@@ -14,17 +15,16 @@ class FullscreenCard extends HTMLElement {
       this.atag.style.textAlign = "center";
       this.atag.style.borderRadius = "var(--ha-card-border-radius, 4px)";
       this.atag.style.cursor = "pointer";
-      this.atag.fullscreen = false;
       this.atag.onclick = function() {
         if (this.fullscreen) {
           document.exitFullscreen();
-          this.innerHTML = "Go fullscreen";
+          this.atag.innerHTML = "Go fullscreen";
         } else {
           document.documentElement.requestFullscreen();
-          this.innerHTML = "Exit fullscreen";
-        }   
+          this.atag.innerHTML = "Exit fullscreen";
+        }
         this.fullscreen = !this.fullscreen;
-      };  
+      }.bind(this);
       this.content.appendChild(this.atag);
       this.appendChild(this.content);
     }
