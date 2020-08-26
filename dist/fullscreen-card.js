@@ -1,6 +1,7 @@
 class FullscreenCard extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
+      this.fullscreen = false
       this.content = document.createElement("ha-card");
       this.content.style.padding = "15px";
       this.atag = document.createElement("a");
@@ -15,8 +16,14 @@ class FullscreenCard extends HTMLElement {
       this.atag.style.borderRadius = "var(--ha-card-border-radius, 4px)";
       this.atag.style.cursor = "pointer";
       this.atag.onclick = function() {
-        document.body.requestFullscreen();
-      };
+        if (this.fullscreen) {
+          document.exitFullscreen();
+        }   
+        else {
+          document.body.requestFullscreen();
+        }   
+        this.fullscreen = !this.fullscreen;
+      };  
       this.content.appendChild(this.atag);
       this.appendChild(this.content);
     }
