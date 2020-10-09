@@ -39,4 +39,5 @@ class FullscreenCard extends HTMLElement {
 
 customElements.define("fullscreen-card", FullscreenCard);
 window.customCards.push({type: "fullscreen-card", name: "Fullscreen card",
+                         preview: true,
                          description: "Card to go fullscreen."});
