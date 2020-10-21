@@ -1,6 +1,7 @@
+var the_card;
 class FullscreenCard extends HTMLElement {
   set hass(hass) {
-    if (!this.content) {
+    if (!this.content && this.config) {
       this.content = document.createElement("ha-card");
       this.content.style.padding = "15px";
       this.fullscreen = false;
@@ -18,19 +19,20 @@ class FullscreenCard extends HTMLElement {
       this.atag.onclick = function() {
         if (this.fullscreen) {
           document.exitFullscreen();
-          this.atag.innerHTML = "Go fullscreen";
+          this.atag.innerHTML = config["go_fullscreen"] || (config["go_fullscreen"] = "Go fullscreen");
         } else {
           document.documentElement.requestFullscreen();
-          this.atag.innerHTML = "Exit fullscreen";
+          this.atag.innerHTML = config["exit_fullscreen"] || (config["exit_fullscreen"] = "Exit fullscreen");
         }
         this.fullscreen = !this.fullscreen;
       }.bind(this);
       this.content.appendChild(this.atag);
       this.appendChild(this.content);
+      the_card = this;
     }
   }
   setConfig(config) {
-    console.log(config);
+    this.config = config;
   }
   getCardSize() {
     return 2;
@@ -41,3 +43,9 @@ customElements.define("fullscreen-card", FullscreenCard);
 window.customCards.push({type: "fullscreen-card", name: "Fullscreen card",
                          preview: true,
                          description: "Card to go fullscreen."});
+document.body.onkeydown = (event) => {
+  if (event.key == "F11") {
+    event.preventDefault();
+    the_card.atag.onclick();
+  }
+};
