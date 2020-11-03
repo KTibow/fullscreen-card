@@ -20,10 +20,10 @@ jobs:
           path: |
             ~/.cache/pip
           key: custom-component-ci
-      - uses: hacs/integration/action@main
+      - uses: hacs/action@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CATEGORY: integration
+          CATEGORY: plugin
       - uses: KTibow/ha-blueprint@stable
         name: CI
         with:

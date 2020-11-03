@@ -16,13 +16,17 @@ class FullscreenCard extends HTMLElement {
       this.atag.style.textAlign = "center";
       this.atag.style.borderRadius = "var(--ha-card-border-radius, 4px)";
       this.atag.style.cursor = "pointer";
-      this.atag.onclick = function() {
+      this.atag.onclick = function () {
         if (this.fullscreen) {
           document.exitFullscreen();
-          this.atag.innerHTML = config["go_fullscreen"] || (config["go_fullscreen"] = "Go fullscreen");
+          this.atag.innerHTML =
+            config["go_fullscreen"] ||
+            (config["go_fullscreen"] = "Go fullscreen");
         } else {
           document.documentElement.requestFullscreen();
-          this.atag.innerHTML = config["exit_fullscreen"] || (config["exit_fullscreen"] = "Exit fullscreen");
+          this.atag.innerHTML =
+            config["exit_fullscreen"] ||
+            (config["exit_fullscreen"] = "Exit fullscreen");
         }
         this.fullscreen = !this.fullscreen;
       }.bind(this);
@@ -40,9 +44,12 @@ class FullscreenCard extends HTMLElement {
 }
 
 customElements.define("fullscreen-card", FullscreenCard);
-window.customCards.push({type: "fullscreen-card", name: "Fullscreen card",
-                         preview: true,
-                         description: "Card to go fullscreen."});
+window.customCards.push({
+  type: "fullscreen-card",
+  name: "Fullscreen card",
+  preview: true,
+  description: "Card to go fullscreen.",
+});
 document.body.onkeydown = (event) => {
   if (event.key == "F11") {
     event.preventDefault();
