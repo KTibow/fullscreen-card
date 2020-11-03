@@ -1,0 +1,23 @@
+name: Build on release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: npm install uglify-js @babel/core @babel/cli @babel/preset-env
+    - run: npx babel fullscreen-card.js --out-file fullscreen-card.js --presets @babel/preset-env
+    - run: npx uglify-js fullscreen-card.js -b beautify=false,max_line_len=150 --compress --mangle toplevel --output fullscreen-card.js
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./fullscreen-card.js
+        asset_name: fullscreen-card.js
+        asset_content_type: text/javascript
