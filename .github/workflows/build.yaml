@@ -9,9 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: npm install uglify-js @babel/core @babel/cli @babel/preset-env
-    - run: npx babel fullscreen-card.js --out-file fullscreen-card.js --presets @babel/preset-env
-    - run: npx uglify-js fullscreen-card.js -b beautify=false,max_line_len=150 --compress --mangle toplevel --output fullscreen-card.js
+    - run: npm install uglify-es
+    - run: npx uglify-es fullscreen-card.js -b beautify=false,max_line_len=150 --compress --mangle toplevel --output fullscreen-card.js
     - name: Upload release asset
       uses: actions/upload-release-asset@v1
       env:
