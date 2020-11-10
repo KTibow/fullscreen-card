@@ -20,13 +20,11 @@ class FullscreenCard extends HTMLElement {
         if (this.fullscreen) {
           document.exitFullscreen();
           this.atag.innerHTML =
-            config["go_fullscreen"] ||
-            (config["go_fullscreen"] = "Go fullscreen");
+            this.config["go_fullscreen"] || "Go fullscreen";
         } else {
           document.documentElement.requestFullscreen();
           this.atag.innerHTML =
-            config["exit_fullscreen"] ||
-            (config["exit_fullscreen"] = "Exit fullscreen");
+            this.config["exit_fullscreen"] || "Exit fullscreen";
         }
         this.fullscreen = !this.fullscreen;
       }.bind(this);
@@ -44,6 +42,7 @@ class FullscreenCard extends HTMLElement {
 }
 
 customElements.define("fullscreen-card", FullscreenCard);
+window.customCards = window.customCards || [];
 window.customCards.push({
   type: "fullscreen-card",
   name: "Fullscreen card",
