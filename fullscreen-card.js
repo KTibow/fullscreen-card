@@ -17,16 +17,17 @@ class FullscreenCard extends HTMLElement {
       this.atag.style.borderRadius = "var(--ha-card-border-radius, 4px)";
       this.atag.style.cursor = "pointer";
       this.atag.onclick = function () {
-        if (this.fullscreen) {
+        if (this.fullscreen || window["fullScreen"] || document.fullscreenElement) {
           document.exitFullscreen();
+          this.fullscreen = false;
           this.atag.innerHTML =
             this.config["go_fullscreen"] || "Go fullscreen";
         } else {
           document.documentElement.requestFullscreen();
+          this.fullscreen = true;
           this.atag.innerHTML =
             this.config["exit_fullscreen"] || "Exit fullscreen";
         }
-        this.fullscreen = !this.fullscreen;
       }.bind(this);
       this.content.appendChild(this.atag);
       this.appendChild(this.content);
