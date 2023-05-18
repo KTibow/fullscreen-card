@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: npm install uglify-es
-    - run: npx uglify-es fullscreen-card.js --compress --output fullscreen-card.js
+    - uses: actions/checkout@v3
+    - run: npm install uglify-js
+    - run: npx uglify-js fullscreen-card.js --compress --output fullscreen-card.js
     - name: Upload release asset
       uses: actions/upload-release-asset@v1
       env:
