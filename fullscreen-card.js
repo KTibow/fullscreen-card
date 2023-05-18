@@ -5,7 +5,13 @@ class FullscreenCard extends HTMLElement {
       this.content.style.padding = "1rem";
 
       this.tag = document.createElement("button");
-      this.tag.innerHTML = this.config["go_fullscreen"] || "Go fullscreen";
+      if (window["fullScreen"] || document.fullscreenElement) {
+        this.tag.innerHTML =
+          this.config["exit_fullscreen"] || "Exit fullscreen";
+      } else {
+        this.tag.innerHTML =
+          this.config["go_fullscreen"] || "Go fullscreen";
+      }
       this.tag.style.width = "100%";
       this.tag.style.fontSize = "var(--paper-font-display1_-_font-size)";
       this.tag.style.padding = "0.5rem";
@@ -15,18 +21,28 @@ class FullscreenCard extends HTMLElement {
       this.tag.style.textAlign = "center";
       this.tag.style.borderRadius = "var(--ha-card-border-radius, 4px)";
       this.tag.style.cursor = "pointer";
-      this.tag.onclick = function () {
-        if (window["fullScreen"] || document.fullscreenElement) {
-          document.exitFullscreen();
-        } else {
-          document.documentElement.requestFullscreen();
-        }
-        this.updateTag();
-      }.bind(this);
 
+      const toggleFullscreen = async () => {
+        if (window["fullScreen"] || document.fullscreenElement) {
+          await document.exitFullscreen();
+          this.tag.innerHTML =
+            this.config["go_fullscreen"] || "Go fullscreen";
+        } else {
+          await document.documentElement.requestFullscreen();
+          this.tag.innerHTML =
+            this.config["exit_fullscreen"] || "Exit fullscreen";
+        }
+      };
+      this.tag.onclick = toggleFullscreen;
       this.content.appendChild(this.tag);
       this.appendChild(this.content);
-      document.addEventListener("fullscreenchange", this.updateTag.bind(this));
+
+      document.body.onkeydown = (event) => {
+        if (event.key == "F11") {
+          toggleFullscreen();
+          event.preventDefault();
+        }
+      }
     }
   }
   setConfig(config) {
@@ -34,15 +50,6 @@ class FullscreenCard extends HTMLElement {
   }
   getCardSize() {
     return 2;
-  }
-  updateTag() {
-    if (window["fullScreen"] || document.fullscreenElement) {
-      this.tag.innerHTML =
-        this.config["exit_fullscreen"] || "Exit fullscreen";
-    } else {
-      this.tag.innerHTML =
-        this.config["go_fullscreen"] || "Go fullscreen";
-    }
   }
 }
 
